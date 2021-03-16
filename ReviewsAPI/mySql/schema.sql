@@ -12,7 +12,7 @@ CREATE TABLE reviews (
   review_id int PRIMARY KEY,
   rating int NOT NULL,
   summary VARCHAR NOT NULL,
-  recommend bit NOT NULL,
+  recommend boolean NOT NULL,
   response VARCHAR NULL,
   body VARCHAR NOT NULL,
   date DATETIME NOT NULL,

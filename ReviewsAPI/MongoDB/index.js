@@ -6,7 +6,6 @@ db.once('open', function(){
   console.log(Connected to MongoDB successfully!);
 });
 
-
 let reviewSchema = mongoose.Schema({
   review_id: Number,
   rating: Number,
@@ -21,7 +20,6 @@ let reviewSchema = mongoose.Schema({
 });
 
 let Review = mongoose.model('Review', repoSchema);
-
 
 let saveReview = (reviewData) => {
   reviewData.forEach(review => {
