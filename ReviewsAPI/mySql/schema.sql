@@ -34,6 +34,7 @@ CREATE TABLE characteristics (
 )
 
 CREATE TABLE product_characteristics (
+  id int NOT NULL PRIMARY KEY,
   product_id int NOT NULL,
   characteristic_id integer NOT NULL,
   characteristic_value INT NOT NULL,
@@ -42,9 +43,9 @@ CREATE TABLE product_characteristics (
 )
 
 CREATE TABLE reviews_characteristics (
+  product_characteristics_id int NOT NULL
   review_id integer NOT NULL
-  characteristic_id integer NOT NULL
-  characteristic_value INT NOT NULL
+  review_value INT NOT NULL,
+  FOREIGN KEY(product_characteristics_id) REFERENCES product_characteristics(id)
   FOREIGN KEY (review_id) REFERENCES reviews(review_id),
-  FOREIGN KEY characteristic_id REFERENCES characteristics(characteristic_id),
 )

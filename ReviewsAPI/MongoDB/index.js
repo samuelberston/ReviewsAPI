@@ -6,10 +6,6 @@ db.once('open', function(){
   console.log(Connected to MongoDB successfully!);
 });
 
-let product = mongoose.Schema({
-  product_id: Number,
-});
-
 let reviewSchema = mongoose.Schema({
   review_id: Number,
   rating: Number,
@@ -20,16 +16,16 @@ let reviewSchema = mongoose.Schema({
   date: Date,
   reviewer_name: String,
   helpfulness: Number,
-  photos: Array,
-});
-
-let photoSchema = mongoose.Schema({
-  photo_id: Number,
-  photo_url: String,
-  review_id: Number,
+  photos: [String],
+  product_id: String,
+  characteristic_ratings: [
+    {characteristic_id: Number,
+      Rating: Number
+    }]
 });
 
 let characteristicSchema = mongoose.Schema({
   id: Number,
   name: String,
+  product_id: Number,
 });
