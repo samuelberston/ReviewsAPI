@@ -74,7 +74,7 @@ reviewRoutes.post('/reviews', (req, res) => {
 
 reviewRoutes.put('/review/heplful', (req, res) => {
   const { review_id } = req.query;
-  connection.query(`UPDATE reviews SET helpfullness += 1 WHERE review_id = ${review_id}`)
+  connection.query(`UPDATE reviews SET helpfullness = helpfullness + 1 WHERE review_id = ${review_id}`)
     .then(() => {
       console.log('marked helpful');
     })
@@ -83,6 +83,7 @@ reviewRoutes.put('/review/heplful', (req, res) => {
     });
 });
 
+// do not delete review, but add a reported field so you can filter GET request
 reviewRoutes.put('/review/report', (req, res) => {
   const { review_id } = req.query;
   reviewRoutes.put('/review/heplful', (req, res) => {
