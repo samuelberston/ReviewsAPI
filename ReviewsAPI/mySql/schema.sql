@@ -6,7 +6,7 @@ CREATE TABLE products (
 )
 
 CREATE TABLE reviews (
-  review_id int PRIMARY KEY,
+  review_id integer PRIMARY KEY,
   rating int NOT NULL,
   summary VARCHAR NOT NULL,
   recommend bit NOT NULL,
@@ -20,17 +20,31 @@ CREATE TABLE reviews (
 )
 
 CREATE TABLE photos (
-  id int PRIMARY KEY,
-  review_id int NOT NULL,
   photo_id int NOT NULL,
   photo_url int NOT NULL,
+  product_id int NOT NULL,
+  review_id integer NOT NULL,
+  FOREIGN KEY (product_id) REFERENCES products(product_id), -- some photos might have the same review_id but different product
   FOREIGN KEY (review_id) REFERENCES reviews(review_id),
 )
 
 CREATE TABLE characteristics (
-  id int PRIMARY KEY,
+  characteristic_id integer NOT NULL PRIMARY KEY,
+  characteristic_name VARCHAR NOT NULL,
+)
+
+CREATE TABLE product_characteristics (
   product_id int NOT NULL,
   characteristic_id integer NOT NULL,
   characteristic_value INT NOT NULL,
-  FOREIGN KEY (product_id) REFERENCES products(product_id),
+  FOREIGN KEY product_id REFERENCES products(product_id),
+  FOREIGN KEY characteristic_id REFERENCES characteristics(characteristic_id),
+)
+
+CREATE TABLE reviews_characteristics (
+  review_id integer NOT NULL
+  characteristic_id integer NOT NULL
+  characteristic_value INT NOT NULL
+  FOREIGN KEY (review_id) REFERENCES reviews(review_id),
+  FOREIGN KEY characteristic_id REFERENCES characteristics(characteristic_id),
 )
