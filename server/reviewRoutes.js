@@ -1,20 +1,22 @@
 const reviewRoutes = require('express').Router();
 const axios = require('axios');
 const urlModule = require('url');
-const config = require('../../config.js');
+const config = require('../config.js');
 
-const connection = require('./mySql/connection');
+const connection = require('../mySql/connection.js');
 
 const Headers = {
   Authorization: `${config.TOKEN}`
 }
 
+//  INNER JOIN photos ON reviews.review_id = photos.review_id
 reviewRoutes.get('/reviews', (req, res) => {
-  const productId = req.query.product_id;
-  connection.query(`SELECT * FROM reviews WHERE product_id = ${productId} INNER JOIN photos ON reviews.review_id = photos.review_id`,
-    (err, results) => {
-      if (err) { console.log(err); }
-      res.status(201).send(results);
+  const product_id = req.query.product_id;
+  connection.query(`SELECT * FROM reviews 8ee1ba54837de5bb000a0258a860ebc49c1dea8 WHERE product_id = '${product_id}'`,
+    (err, data) => {
+      if (err) { res.status(400); }
+      console.log(data);
+      res.status(201).send(data);
     });
 });
 
@@ -30,8 +32,8 @@ reviewRoutes.get('/reviews/meta', (req, res) => {
   const five = connection.query(`SELECT COUNT(rating) FROM reviews WHERE rating = 5 AND product_id = ${productId}`);
 
   // recommended
-  const true = conection.query(`SELECT COUNT(recommend) FROM reviews WHERE recommend = true AND product_id = ${productId}`);
-  const false = connection.query(`SELECT COUNT(recommend) FROM reviews WHERE recommend = false AND product_id = ${productId}`);
+  const t = connection.query(`SELECT COUNT(recommend) FROM reviews WHERE recommend = true AND product_id = ${productId}`);
+  const f = connection.query(`SELECT COUNT(recommend) FROM reviews WHERE recommend = false AND product_id = ${productId}`);
 
   // characteristics
   const chars = connection.query(`SELECT characteristic_id, characteristic_value FROM product_characteristics WHERE product_id = ${product_id}`); // and then turn this into object of key value pairs
@@ -48,8 +50,8 @@ reviewRoutes.get('/reviews/meta', (req, res) => {
           five,
         },
         recommended: {
-          true,
-          false,
+          true: t,
+          false: f,
         },
         characteristics: {
           chars,
@@ -94,6 +96,7 @@ reviewRoutes.put('/review/report', (req, res) => {
       .catch((err) => {
         console.log(err);
       });
+  });
 });
 
 module.exports = reviewRoutes;

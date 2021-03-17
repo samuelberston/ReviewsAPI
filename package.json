@@ -5,6 +5,7 @@
   "main": "config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "npx nodemon server/server.js",
     "mysql-load": "mysql -u root -p < schema.sql",
     "mysql-start": "mysql -u root -p"
   },
@@ -17,5 +18,10 @@
   "bugs": {
     "url": "https://github.com/10-dapper-dogwood/ReviewsAPI/issues"
   },
-  "homepage": "https://github.com/10-dapper-dogwood/ReviewsAPI#readme"
+  "homepage": "https://github.com/10-dapper-dogwood/ReviewsAPI#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "express": "^4.17.1",
+    "mysql2": "^2.2.5"
+  }
 }
