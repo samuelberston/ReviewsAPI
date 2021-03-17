@@ -9,15 +9,26 @@ const Headers = {
   Authorization: `${config.TOKEN}`
 }
 
-//  INNER JOIN photos ON reviews.review_id = photos.review_id
+// need to fix this because there might be no photo for a product
 reviewRoutes.get('/reviews', (req, res) => {
   const product_id = req.query.product_id;
-  connection.query(`SELECT * FROM reviews 8ee1ba54837de5bb000a0258a860ebc49c1dea8 WHERE product_id = '${product_id}'`,
-    (err, data) => {
-      if (err) { res.status(400); }
-      console.log(data);
-      res.status(201).send(data);
-    });
+  // const reviews = (productId) => {connection.query(`SELECT * FROM reviews WHERE product_id = '${productId}'`, (err, result) => {
+  //   if (err) { console.log(err); }
+  //   res.send(result);
+  // })};
+  connection.query(`SELECT * FROM reviews WHERE product_id = '${product_id}'`, (err, result) => {
+    if (err) { console.log(err); }
+    res.send(result);
+  });
+});
+
+reviewRoutes.get('/reviews/photos', (req, res) => {
+  const product_id = req.query.product_id;
+
+  connection.query(`select photo_id, photo_url from photos inner join reviews on photos.review_id = reviews.review_id and reviews.product_id = '${product_id}'`, (err, result) => {
+    if (err) { console.log(err); }
+    res.send(result);
+  });
 });
 
 reviewRoutes.get('/reviews/meta', (req, res) => {
@@ -38,7 +49,7 @@ reviewRoutes.get('/reviews/meta', (req, res) => {
   // characteristics
   const chars = connection.query(`SELECT characteristic_id, characteristic_value FROM product_characteristics WHERE product_id = ${product_id}`); // and then turn this into object of key value pairs
 
-  Promise.all([one, two, three, four, five, true, false, chars])
+  Promise.all([one, two, three, four, five, t, f, chars])
     .then((values) => {
       const metaData = {
         productId,

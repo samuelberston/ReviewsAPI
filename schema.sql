@@ -22,7 +22,7 @@ CREATE TABLE reviews (
 CREATE TABLE photos (
   photo_id int NOT NULL,
   review_id integer NOT NULL,
-  photo_url int NOT NULL,
+  photo_url VARCHAR(200) NOT NULL,
   FOREIGN KEY (review_id) REFERENCES reviews(review_id)
 );
 
