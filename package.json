@@ -1,0 +1,21 @@
+{
+  "name": "reviewsapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "mysql-load": "mysql -u root -p < schema.sql",
+    "mysql-start": "mysql -u root -p"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/10-dapper-dogwood/ReviewsAPI.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/10-dapper-dogwood/ReviewsAPI/issues"
+  },
+  "homepage": "https://github.com/10-dapper-dogwood/ReviewsAPI#readme"
+}
