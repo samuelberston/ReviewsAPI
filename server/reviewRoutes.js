@@ -12,10 +12,7 @@ const Headers = {
 // need to fix this because there might be no photo for a product
 reviewRoutes.get('/reviews', (req, res) => {
   const product_id = req.query.product_id;
-  // const reviews = (productId) => {connection.query(`SELECT * FROM reviews WHERE product_id = '${productId}'`, (err, result) => {
-  //   if (err) { console.log(err); }
-  //   res.send(result);
-  // })};
+
   connection.query(`SELECT * FROM reviews WHERE product_id = '${product_id}'`, (err, result) => {
     if (err) { console.log(err); }
     res.send(result);
@@ -31,48 +28,68 @@ reviewRoutes.get('/reviews/photos', (req, res) => {
   });
 });
 
-reviewRoutes.get('/reviews/meta', (req, res) => {
+reviewRoutes.get('/reviews/meta/ratings', (req, res) => {
   const productId = req.query.product_id;
-  // am I going to have to construct the meta data from the reviews data, or can I simply send it along .... ???
 
   // ratings
-  const one = connection.query(`SELECT COUNT(rating) FROM reviews WHERE rating = 1 AND product_id = ${productId}`);
-  const two = connection.query(`SELECT COUNT(rating) FROM reviews WHERE rating = 2 AND product_id = ${productId}`);
-  const three = connection.query(`SELECT COUNT(rating) FROM reviews WHERE rating = 3 AND product_id = ${productId}`);
-  const four = connection.query(`SELECT COUNT(rating) FROM reviews WHERE rating = 4 AND product_id = ${productId}`);
-  const five = connection.query(`SELECT COUNT(rating) FROM reviews WHERE rating = 5 AND product_id = ${productId}`);
+  connection.query(`SELECT COUNT(rating) FROM reviews WHERE rating = 1 AND product_id = '${productId}'`, (err, data) => {
+    if (err) { console.log(err); }
+    const one = data[0]['COUNT(rating)'];
+    connection.query(`SELECT COUNT(rating) FROM reviews WHERE rating = 2 AND product_id = '${productId}'`, (err, data) => {
+      if (err) { console.log(err); }
+      const two = data[0]['COUNT(rating)'];
+       connection.query(`SELECT COUNT(rating) FROM reviews WHERE rating = 3 AND product_id = '${productId}'`, (err, data) => {
+        if (err) { console.log(err); }
+        const three = data[0]['COUNT(rating)'];
+        connection.query(`SELECT COUNT(rating) FROM reviews WHERE rating = 4 AND product_id = '${productId}'`, (err, data) => {
+          if (err) { console.log(err); }
+          const four = data[0]['COUNT(rating)'];
+          connection.query(`SELECT COUNT(rating) FROM reviews WHERE rating = 5 AND product_id = '${productId}'`, (err, data) => {
+            if (err) { console.log(err); }
+            const five = data[0]['COUNT(rating)'];
+            const ratings = {
+              one,
+              two,
+              three,
+              four,
+              five,
+            }
+            res.send(ratings);
+          });
+        });
+      });
+    });
+  });
 
   // recommended
-  const t = connection.query(`SELECT COUNT(recommend) FROM reviews WHERE recommend = true AND product_id = ${productId}`);
-  const f = connection.query(`SELECT COUNT(recommend) FROM reviews WHERE recommend = false AND product_id = ${productId}`);
+  // const t = connection.query(`SELECT COUNT(recommend) FROM reviews WHERE recommend = true AND product_id = ${productId}`);
+  // const f = connection.query(`SELECT COUNT(recommend) FROM reviews WHERE recommend = false AND product_id = ${productId}`);
 
-  // characteristics
-  const chars = connection.query(`SELECT characteristic_id, characteristic_value FROM product_characteristics WHERE product_id = ${product_id}`); // and then turn this into object of key value pairs
+  // // characteristics
+  // const chars = connection.query(`SELECT characteristic_id, characteristic_value FROM product_characteristics WHERE product_id = ${productId}`); // and then turn this into object of key value pairs
+});
 
-  Promise.all([one, two, three, four, five, t, f, chars])
-    .then((values) => {
-      const metaData = {
-        productId,
-        ratings: {
-          one,
-          two,
-          three,
-          four,
-          five,
-        },
-        recommended: {
-          true: t,
-          false: f,
-        },
-        characteristics: {
-          chars,
-        }
+reviewRoutes.get('/reviews/meta/recommend', (req, res) => {
+  const product_id = req.query.product_id;
+  connection.query(`SELECT COUNT(recommend) FROM reviews WHERE recommend = true AND product_id = ${product_id}`, (err, data) => {
+    const t = data[0]['COUNT(recommend)'];
+    connection.query(`SELECT COUNT(recommend) FROM reviews WHERE recommend = false AND product_id = ${product_id}`, (err, data) => {
+      const f = data[0]['COUNT(recommend)'];
+      const recommend = {
+        true: t,
+        false: f,
       }
-      res.send(metaData);
-    })
-    .catch((err) => {
-      console.log(err);
+      res.send(recommend);
     });
+  });
+});
+
+reviewRoutes.get('/reviews/meta/characteristics', (req, res) => {
+  const product_id = req.query.product_id;
+  connection.query(`SELECT * FROM characteristics_reviews INNER JOIN reviews ON characteristics_reviews.review_id = reviews.review_id and reviews.product_id = '${product_id}'`, (err, data) => {
+    const chars = data;
+    res.send(chars);
+  });
 });
 
 reviewRoutes.post('/reviews', (req, res) => {
