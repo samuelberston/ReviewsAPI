@@ -60,13 +60,6 @@ reviewRoutes.get('/reviews/meta/ratings', (req, res) => {
       });
     });
   });
-
-  // recommended
-  // const t = connection.query(`SELECT COUNT(recommend) FROM reviews WHERE recommend = true AND product_id = ${productId}`);
-  // const f = connection.query(`SELECT COUNT(recommend) FROM reviews WHERE recommend = false AND product_id = ${productId}`);
-
-  // // characteristics
-  // const chars = connection.query(`SELECT characteristic_id, characteristic_value FROM product_characteristics WHERE product_id = ${productId}`); // and then turn this into object of key value pairs
 });
 
 reviewRoutes.get('/reviews/meta/recommend', (req, res) => {
@@ -86,8 +79,9 @@ reviewRoutes.get('/reviews/meta/recommend', (req, res) => {
 
 reviewRoutes.get('/reviews/meta/characteristics', (req, res) => {
   const product_id = req.query.product_id;
-  connection.query(`SELECT * FROM characteristics_reviews INNER JOIN reviews ON characteristics_reviews.review_id = reviews.review_id and reviews.product_id = '${product_id}'`, (err, data) => {
+  connection.query(`SELECT reviews.review_id, characteristics_reviews.characteristic_id, characteristics_reviews.characteristic_value FROM characteristics_reviews INNER JOIN reviews ON characteristics_reviews.review_id = reviews.review_id and reviews.product_id = '${product_id}'`, (err, data) => {
     const chars = data;
+    console.log(data);
     res.send(chars);
   });
 });
