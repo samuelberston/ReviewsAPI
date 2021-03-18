@@ -23,7 +23,7 @@ CREATE TABLE photos (
   photo_id INT NOT NULL,
   review_id INT NOT NULL,
   photo_url VARCHAR(255) NOT NULL
-  -- FOREIGN KEY (review_id) REFERENCES reviews(review_id)
+  FOREIGN KEY (review_id) REFERENCES reviews(review_id)
 );
 
 CREATE TABLE characteristics (
