@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "npx nodemon server/server.js",
     "mysql-load": "mysql --local-infile=1 -u root -p < schema.sql",
-    "mysql": "mysql --local-infile=1 -u root -p"
+    "mysql": "mysql --local-infile=1 -u root -p",
+    "lint": "./node_modules/.bin/eslint"
   },
   "repository": {
     "type": "git",
@@ -22,7 +23,22 @@
   "dependencies": {
     "axios": "^0.21.1",
     "bluebird": "^3.7.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "express": "^4.17.1",
-    "mysql2": "^2.2.5"
+    "install-peerdeps": "^3.0.3",
+    "jest-environment-enzyme": "^7.1.2",
+    "mysql2": "^2.2.5",
+    "npx": "^3.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.22.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "jest-enzyme": "^7.1.2",
+    "nodemon": "^2.0.7",
+    "webpack": "^5.26.3",
+    "webpack-cli": "^4.5.0"
   }
 }
