@@ -6,8 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "npx nodemon server/server.js",
-    "mysql-load": "mysql --local-infile=1 -u root -p < schema.sql",
     "mysql": "mysql --local-infile=1 -u root -p",
+    "mysql-load": "mysql --local-infile=1 -u root -p < schema.sql",
+    "mysql-seed": "mysql --local-infile=1 -u root -p < seed.sql",
     "lint": "./node_modules/.bin/eslint"
   },
   "repository": {

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const reviewRoutes = require('express').Router();
 
 const connection = require('../mySql/connection.js');
@@ -7,6 +6,7 @@ reviewRoutes.get('/reviews', (req, res) => {
   const productId = req.query.product_id;
   connection.query(`SELECT * FROM reviews WHERE product_id = '${productId}'`, (err, result) => {
     if (err) { console.log(err); }
+    console.log(result);
     res.send(result);
   });
 });
@@ -57,6 +57,8 @@ reviewRoutes.get('/reviews/meta/characteristics', (req, res) => {
     res.send(chars);
   });
 });
+
+// i don't know if this is working - how to do an id
 
 reviewRoutes.post('/reviews', (req, res) => {
   connection.query(`INSERT INTO reviews (review_id, rating, summary, recommend, body, reviewer_name, product_id) VALUES (${req.body.review_id}, ${req.body.rating}, ${req.body.summary}, ${req.body.recommend}, ${req.body.body}, ${req.body.reviewer_name}, ${req.body.product_id})`)

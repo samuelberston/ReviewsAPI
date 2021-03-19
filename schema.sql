@@ -1,3 +1,5 @@
+-- SET GLOBAL local_infile = 1;
+
 DROP DATABASE IF EXISTS reviewsAPI;
 
 CREATE DATABASE reviewsAPI;
@@ -5,7 +7,7 @@ CREATE DATABASE reviewsAPI;
 USE reviewsAPI;
 
 CREATE TABLE reviews (
-  review_id INT NOT NULL PRIMARY KEY,
+  review_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   product_id INT NOT NULL,
   rating INT NOT NULL,
   date VARCHAR(12) NOT NULL,
@@ -38,38 +40,14 @@ CREATE TABLE characteristics_reviews (
   characteristic_value INT NOT NULL
 );
 
-LOAD DATA LOCAL INFILE '/Users/samuelberston/Desktop/CSV/reviews-clean.csv'
-INTO TABLE reviews
-FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
-
-LOAD DATA LOCAL INFILE '/Users/samuelberston/Desktop/CSV/reviewsPhotos-clean.csv'
-INTO TABLE photos
-FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
-
-LOAD DATA LOCAL INFILE '/Users/samuelberston/Desktop/CSV/characteristics-clean.csv'
-INTO TABLE characteristics
-FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
-
-LOAD DATA LOCAL INFILE '/Users/samuelberston/Desktop/CSV/characteristicsReviews-clean.csv'
-INTO TABLE characteristics_reviews
-FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
-
--- add the foreign keys AFTER the loading
+-- add the foreign keys AFTER the loading --
 ALTER TABLE photos
 ADD FOREIGN KEY (review_id) REFERENCES reviews(review_id);
 
 ALTER TABLE characteristics_reviews
 ADD FOREIGN KEY (review_id) REFERENCES reviews(review_id);
 
--- add indexes
+-- add indexes --
 CREATE INDEX product_id
 ON reviews (product_id);
 
