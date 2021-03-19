@@ -8,7 +8,7 @@ CREATE TABLE reviews (
   review_id INT NOT NULL PRIMARY KEY,
   product_id INT NOT NULL,
   rating INT NOT NULL,
-  date DATETIME NOT NULL,
+  date VARCHAR(12) NOT NULL,
   summary VARCHAR(255) NOT NULL,
   body TEXT NOT NULL,
   recommend TINYINT NOT NULL,
@@ -70,5 +70,8 @@ ALTER TABLE characteristics_reviews
 ADD FOREIGN KEY (review_id) REFERENCES reviews(review_id);
 
 -- add indexes
+CREATE INDEX product_id
+ON reviews (product_id);
+
 CREATE INDEX photo_id
 ON photos (photo_id);

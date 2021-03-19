@@ -3,9 +3,8 @@ const reviewRoutes = require('express').Router();
 
 const connection = require('../mySql/connection.js');
 
-// need to fix this because there might be no photo for a product
 reviewRoutes.get('/reviews', (req, res) => {
-  const { productId } = req.query;
+  const productId = req.query.product_id;
   connection.query(`SELECT * FROM reviews WHERE product_id = '${productId}'`, (err, result) => {
     if (err) { console.log(err); }
     res.send(result);
@@ -14,7 +13,7 @@ reviewRoutes.get('/reviews', (req, res) => {
 
 reviewRoutes.get('/reviews/photos', (req, res) => {
   const { productId } = req.query;
-  connection.query(`select photo_id, photo_url from photos inner join reviews on photos.review_id = reviews.review_id and reviews.product_id = '${productId}'`, (err, result) => {
+  connection.query(`SELECT photo_id, photo_url FROM photos INNER JOIN reviews ON photos.review_id = reviews.review_id AND reviews.product_id = '${productId}'`, (err, result) => {
     if (err) { console.log(err); }
     res.send(result);
   });
@@ -23,34 +22,16 @@ reviewRoutes.get('/reviews/photos', (req, res) => {
 reviewRoutes.get('/reviews/meta/ratings', (req, res) => {
   const productId = req.query.product_id;
 
-  // ratings -- USE WHERE IN
-  connection.query(`SELECT COUNT(rating) FROM reviews WHERE rating = 1 AND product_id = '${productId}'`, (err, data) => {
+  // ratings -- USE GROUP BY --
+  // SELECT rating, COUNT(rating) FROM reviews WHERE product_id = ${product_id} GROUP BY rating
+
+  connection.query(`SELECT rating, COUNT(rating) FROM reviews WHERE product_id = ${productId} GROUP BY rating`, (err, data) => {
     if (err) { console.log(err); }
-    const one = data[0]['COUNT(rating)'];
-    connection.query(`SELECT COUNT(rating) FROM reviews WHERE rating = 2 AND product_id = '${productId}'`, (err1, data1) => {
-      if (err1) { console.log(err1); }
-      const two = data1[0]['COUNT(rating)'];
-      connection.query(`SELECT COUNT(rating) FROM reviews WHERE rating = 3 AND product_id = '${productId}'`, (err2, data2) => {
-        if (err2) { console.log(err2); }
-        const three = data2[0]['COUNT(rating)'];
-        connection.query(`SELECT COUNT(rating) FROM reviews WHERE rating = 4 AND product_id = '${productId}'`, (err3, data3) => {
-          if (err3) { console.log(err3); }
-          const four = data3[0]['COUNT(rating)'];
-          connection.query(`SELECT COUNT(rating) FROM reviews WHERE rating = 5 AND product_id = '${productId}'`, (err4, data4) => {
-            if (err4) { console.log(err4); }
-            const five = data4[0]['COUNT(rating)'];
-            const ratings = {
-              one,
-              two,
-              three,
-              four,
-              five,
-            };
-            res.send(ratings);
-          });
-        });
-      });
+    const ratings = {};
+    data.forEach((rating) => {
+      ratings[rating.rating] = rating['COUNT(rating)'];
     });
+    res.send(ratings);
   });
 });
 

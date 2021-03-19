@@ -17,7 +17,7 @@ const validateReviews = (line) => {
   if (Number.isNan(reviewId)) { return false; }
   if (Number.isNan(productId)) { return false; }
   if (Number.isNan(rating) || rating < 0 || rating > 5) { return false; }
-  
+
   if (typeof summary !== 'string') { return false; }
   if (typeof body !== 'string') { return false; }
   if (Number.isNan(recommend)) {
@@ -34,7 +34,9 @@ const validateReviews = (line) => {
       reported = 0;
     }
   }
-
+  if (typeof reviewerName !== 'string') { return false; }
+  if (typeof reviewerEmail !== 'string') { return false; }
+  if (Number.isNan(helpfulness)) { return false; }
   return columns;
 };
 
