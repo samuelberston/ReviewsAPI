@@ -14,9 +14,8 @@ const rl = readLine.createInterface({
 });
 
 rl.on('line', (line) => {
-  console.log(line);
-  // const validatedLine = validateReviews(line);
-  // if (validatedLine) {
-  //   rl.output.write(`${validatedLine}\n`);
-  // }
+  const validatedLine = validateReviews(line);
+  if (validatedLine) {
+    rl.output.write(`${validatedLine}\n`);
+  }
 });

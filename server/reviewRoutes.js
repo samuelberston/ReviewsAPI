@@ -22,9 +22,6 @@ reviewRoutes.get('/reviews/photos', (req, res) => {
 reviewRoutes.get('/reviews/meta/ratings', (req, res) => {
   const productId = req.query.product_id;
 
-  // ratings -- USE GROUP BY --
-  // SELECT rating, COUNT(rating) FROM reviews WHERE product_id = ${product_id} GROUP BY rating
-
   connection.query(`SELECT rating, COUNT(rating) FROM reviews WHERE product_id = ${productId} GROUP BY rating`, (err, data) => {
     if (err) { console.log(err); }
     const ratings = {};
