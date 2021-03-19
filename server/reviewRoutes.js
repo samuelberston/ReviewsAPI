@@ -6,7 +6,6 @@ const connection = require('../mySql/connection.js');
 // need to fix this because there might be no photo for a product
 reviewRoutes.get('/reviews', (req, res) => {
   const { productId } = req.query;
-
   connection.query(`SELECT * FROM reviews WHERE product_id = '${productId}'`, (err, result) => {
     if (err) { console.log(err); }
     res.send(result);
@@ -24,7 +23,7 @@ reviewRoutes.get('/reviews/photos', (req, res) => {
 reviewRoutes.get('/reviews/meta/ratings', (req, res) => {
   const productId = req.query.product_id;
 
-  // ratings
+  // ratings -- USE WHERE IN
   connection.query(`SELECT COUNT(rating) FROM reviews WHERE rating = 1 AND product_id = '${productId}'`, (err, data) => {
     if (err) { console.log(err); }
     const one = data[0]['COUNT(rating)'];
