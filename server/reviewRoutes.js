@@ -4,6 +4,7 @@ const connection = require('../mySql/connection.js');
 
 reviewRoutes.get('/reviews', (req, res) => {
   const productId = req.query.product_id;
+
   connection.query(`SELECT * FROM reviews WHERE product_id = '${productId}'`, (err, result) => {
     if (err) { console.log(err); }
     console.log(result);
@@ -12,7 +13,8 @@ reviewRoutes.get('/reviews', (req, res) => {
 });
 
 reviewRoutes.get('/reviews/photos', (req, res) => {
-  const { productId } = req.query;
+  const productId = req.query.product_id;
+
   connection.query(`SELECT photo_id, photo_url FROM photos INNER JOIN reviews ON photos.review_id = reviews.review_id AND reviews.product_id = '${productId}'`, (err, result) => {
     if (err) { console.log(err); }
     res.send(result);
@@ -34,6 +36,7 @@ reviewRoutes.get('/reviews/meta/ratings', (req, res) => {
 
 reviewRoutes.get('/reviews/meta/recommend', (req, res) => {
   const productId = req.query.product_id;
+
   connection.query(`SELECT COUNT(recommend) FROM reviews WHERE recommend = true AND product_id = ${productId}`, (err, data) => {
     if (err) { console.log(err); }
     const t = data[0]['COUNT(recommend)'];
@@ -51,6 +54,7 @@ reviewRoutes.get('/reviews/meta/recommend', (req, res) => {
 
 reviewRoutes.get('/reviews/meta/characteristics', (req, res) => {
   const productId = req.query.product_id;
+
   connection.query(`SELECT reviews.review_id, characteristics_reviews.characteristic_id, characteristics_reviews.characteristic_value FROM characteristics_reviews INNER JOIN reviews ON characteristics_reviews.review_id = reviews.review_id and reviews.product_id = '${productId}'`, (err, data) => {
     const chars = data;
     console.log(data);
@@ -72,7 +76,8 @@ reviewRoutes.post('/reviews', (req, res) => {
 });
 
 reviewRoutes.put('/review/heplful', (req, res) => {
-  const { reviewId } = req.query;
+  const reviewId = req.query.review_id;
+
   connection.query(`UPDATE reviews SET helpfullness = helpfullness + 1 WHERE review_id = ${reviewId}`)
     .then(() => {
       console.log('marked helpful');
@@ -85,7 +90,8 @@ reviewRoutes.put('/review/heplful', (req, res) => {
 
 // do not delete review, but add a reported field so you can filter GET request
 reviewRoutes.put('/review/report', (req, res) => {
-  const { reviewId } = req.query;
+  const reviewId = req.query.review_id;
+
   connection.query(`UPDATE reviews SET reported = '1' WHERE review_id = ${reviewId}`)
     .then(() => {
       console.log('reported');
