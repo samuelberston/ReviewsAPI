@@ -9,7 +9,9 @@
     "mysql": "mysql --local-infile=1 -u root -p",
     "mysql-load": "mysql --local-infile=1 -u root -p < schema.sql",
     "mysql-seed": "mysql --local-infile=1 -u root -p < seed.sql",
-    "lint": "./node_modules/.bin/eslint"
+    "lint": "./node_modules/.bin/eslint",
+    "k6": "k6 run --out influxdb=http://localhost:8086/myk6db script.js",
+    "influxdb": "launchctl load ~/Library/LaunchAgents/homebrew.mxcl.influxdb.plist"
   },
   "repository": {
     "type": "git",
