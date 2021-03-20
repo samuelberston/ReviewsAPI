@@ -3,14 +3,16 @@ import http from 'k6/http';
 import { sleep } from 'k6';
 
 export const options = {
-  vus: 10,
-  duration: '15s',
+  vus: 100,
+  duration: '120s',
 };
+
+let productId = 1;
 
 export default function () {
   const url = 'http://127.0.0.1:1128/';
 
-  const productId = 2;
+  productId += 1;
 
   // get requests
   http.get(`${url}reviews/?product_id=${productId}`);

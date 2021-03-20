@@ -63,7 +63,7 @@ reviewRoutes.get('/reviews/meta/characteristics', (req, res) => {
 // i don't know if this is working - how to do an id
 
 reviewRoutes.post('/reviews', (req, res) => {
-  connection.query(`INSERT INTO reviews (review_id, rating, summary, recommend, body, reviewer_name, product_id) VALUES (${req.body.review_id}, ${req.body.rating}, ${req.body.summary}, ${req.body.recommend}, ${req.body.body}, ${req.body.reviewer_name}, ${req.body.product_id})`)
+  connection.query(`INSERT INTO reviews (rating, summary, recommend, body, reviewer_name, product_id) VALUES (${req.body.rating}, ${req.body.summary}, ${req.body.recommend}, ${req.body.body}, ${req.body.reviewer_name}, ${req.body.product_id})`)
     .then(() => {
       console.log('posted review');
       res.status(201).send();
@@ -71,30 +71,28 @@ reviewRoutes.post('/reviews', (req, res) => {
     .catch((err) => {
       console.log(err);
     });
+  // and the photos
 });
 
-reviewRoutes.put('/review/heplful', (req, res) => {
+reviewRoutes.put('/helpful', (req, res) => {
   const reviewId = req.query.review_id;
 
-  connection.query(`UPDATE reviews SET helpfullness = helpfullness + 1 WHERE review_id = ${reviewId}`)
-    .then(() => {
-      console.log('marked helpful');
-      res.status(201).send();
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  connection.query(`UPDATE reviews SET helpfulness = helpfulness + 1 WHERE review_id = ${reviewId}`, (err, data) => {
+    if (err) { console.log(err); }
+    console.log('marked helpful');
+    res.status(201).send(data);
+  });
 });
 
 // do not delete review, but add a reported field so you can filter GET request
-reviewRoutes.put('/review/report', (req, res) => {
+reviewRoutes.put('/report', (req, res) => {
   const reviewId = req.query.review_id;
 
-  connection.query(`UPDATE reviews SET reported = '1' WHERE review_id = ${reviewId}`)
-    .then(() => {
-      console.log('reported');
-      res.status(201).send();
-    });
+  connection.query(`UPDATE reviews SET reported = '1' WHERE review_id = ${reviewId}`, (err, data) => {
+    if (err) { console.log(err); }
+    console.log('reported');
+    res.status(201).send(data);
+  });
 });
 
 module.exports = reviewRoutes;
