@@ -22,7 +22,7 @@ CREATE TABLE reviews (
 );
 
 CREATE TABLE photos (
-  photo_id INT NOT NULL,
+  photo_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   review_id INT NOT NULL,
   photo_url VARCHAR(255) NOT NULL
 );
@@ -50,6 +50,3 @@ ADD FOREIGN KEY (review_id) REFERENCES reviews(review_id);
 -- add indexes --
 CREATE INDEX product_id
 ON reviews (product_id);
-
-CREATE INDEX photo_id
-ON photos (photo_id);

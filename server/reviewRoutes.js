@@ -60,18 +60,14 @@ reviewRoutes.get('/reviews/meta/characteristics', (req, res) => {
   });
 });
 
-// i don't know if this is working - how to do an id
-
 reviewRoutes.post('/reviews', (req, res) => {
-  connection.query(`INSERT INTO reviews (rating, summary, recommend, body, reviewer_name, product_id) VALUES (${req.body.rating}, ${req.body.summary}, ${req.body.recommend}, ${req.body.body}, ${req.body.reviewer_name}, ${req.body.product_id})`)
-    .then(() => {
-      console.log('posted review');
-      res.status(201).send();
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  connection.query(`INSERT INTO reviews (rating, summary, recommend, body, reviewer_name, product_id) VALUES (${req.body.rating}, ${req.body.summary}, ${req.body.recommend}, ${req.body.body}, ${req.body.reviewer_name}, ${req.body.reviewer_email}, ${req.body.product_id})`, (err, data) => {
+    if (err) { console.log(err); }
+    console.log('posted review');
+    res.status(201).send(data);
+  });
   // and the photos
+  // connection.query(`INSERT INTO photos (photo_url) VALUE (${req.body})`)
 });
 
 reviewRoutes.put('/helpful', (req, res) => {
