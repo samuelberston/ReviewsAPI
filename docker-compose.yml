@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  product:
-    build: Product_API/
+  reviews:
+    build: Reviews_API/
     depends_on:
       - 'database'
     ports:
@@ -11,7 +11,7 @@ services:
       image: mysql:8.0.23
       restart: always
       environment:
-        MYSQL_DATABASE: reviewsAPI
+        MYSQL_DATABASE: ReviewsAPI
         MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
       volumes:
-        - ./Product_API/clean:/tmp
+        - ./Reviews_API/clean:/tmp
