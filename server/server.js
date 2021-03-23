@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-const port = 3306;
+const port = 3001;
 
 const server = app.listen(port);
 
