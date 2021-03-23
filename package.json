@@ -5,7 +5,7 @@
   "main": "config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "npx nodemon server/server.js",
+    "start": "node server/server.js",
     "mysql": "mysql --local-infile=1 -u root -p",
     "mysql-load": "mysql --local-infile=1 -u root -p < schema.sql",
     "mysql-seed": "mysql --local-infile=1 -u root -p < seed.sql",
@@ -44,7 +44,6 @@
     "eslint": "^7.22.0",
     "eslint-config-airbnb": "^18.2.1",
     "jest-enzyme": "^7.1.2",
-    "nodemon": "^2.0.7",
     "supertest": "^6.1.3",
     "webpack": "^5.26.3",
     "webpack-cli": "^4.5.0"
