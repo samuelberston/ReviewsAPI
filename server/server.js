@@ -1,5 +1,5 @@
+/* eslint-disable no-console */
 const express = require('express');
-const path = require('path');
 
 const app = express();
 
@@ -11,8 +11,10 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-const port = 3000;
+const port = 3001;
 
-const server = app.listen(port);
+app.listen(port, () => {
+  console.log(`Listening at port ${port}`);
+});
 
 module.exports = app;
