@@ -1,0 +1,51 @@
+{
+  "name": "reviewsapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/server.js",
+    "mysql": "mysql --local-infile=1 -u root -p",
+    "mysql-load": "mysql --local-infile=1 -u root -p < schema.sql",
+    "mysql-seed": "mysql --local-infile=1 -u root -p < seed.sql",
+    "lint": "./node_modules/.bin/eslint",
+    "k6": "k6 run --out influxdb=http://localhost:8086/myk6db script.js",
+    "influxdb": "launchctl load ~/Library/LaunchAgents/homebrew.mxcl.influxdb.plist",
+    "reviewsETL": "node ETL/reviewsETL.js",
+    "photosETL": "node ETL/photosETL.js",
+    "characteristicsETL": "node ETL/characteristicsETL.js",
+    "characteristicsReviewsETL": "node ETL/characteristicsReviewsETL.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/10-dapper-dogwood/ReviewsAPI.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/10-dapper-dogwood/ReviewsAPI/issues"
+  },
+  "homepage": "https://github.com/10-dapper-dogwood/ReviewsAPI#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bluebird": "^3.7.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "express": "^4.17.1",
+    "install-peerdeps": "^3.0.3",
+    "jest-environment-enzyme": "^7.1.2",
+    "mysql2": "^2.2.5",
+    "npx": "^10.2.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.22.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "jest-enzyme": "^7.1.2",
+    "supertest": "^6.1.3",
+    "webpack": "^5.26.3",
+    "webpack-cli": "^4.5.0"
+  }
+}
