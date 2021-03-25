@@ -37,7 +37,7 @@ export default function () {
 
   // put requests (marking reviews as helpful and reporting reviews)
   http.put(`${url}helpful/?review_id=${reviewId}`);
-  http.put(`${url}report/?review_id=${reviewId}`);
+  // http.put(`${url}report/?review_id=${reviewId}`);
 
   sleep(1);
 }
