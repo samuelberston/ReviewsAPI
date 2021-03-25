@@ -1,7 +1,7 @@
 const mysql = require('mysql2');
 
 const db = mysql.createConnection({
-  host: 'localhost', // change to the AWS connection
+  host: '13.58.46.116', // change to the IPv4 Public IP Address
   user: 'root',
   password: 'password',
   database: 'reviewsAPI',
