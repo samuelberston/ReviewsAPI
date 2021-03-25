@@ -54,7 +54,13 @@ reviewRoutes.get('/reviews/meta/recommend', (req, res) => {
 reviewRoutes.get('/reviews/meta/characteristics', (req, res) => {
   const productId = req.query.product_id;
 
-  db.query(`SELECT reviews.review_id, characteristics_reviews.characteristic_id, characteristics_reviews.characteristic_value FROM characteristics_reviews INNER JOIN reviews ON characteristics_reviews.review_id = reviews.review_id and reviews.product_id = '${productId}'`, (err, data) => {
+  db.query(`SELECT characteristics.characteristic_name, characteristics.characteristic_id, characteristics_reviews.characteristic_value
+  FROM characteristics
+  JOIN characteristics_reviews
+  ON characteristics.characteristic_id = characteristics_reviews.characteristic_id
+  WHERE review_id
+  IN
+  (SELECT review_id FROM reviews WHERE product_id = ${productId})`, (err, data) => {
     const chars = data;
     res.send(chars);
   });
@@ -65,8 +71,6 @@ reviewRoutes.post('/reviews', (req, res) => {
     if (err) { throw err; }
     res.status(201).send(data);
   });
-  // and the photos
-  // db.query(`INSERT INTO photos (photo_url) VALUE (${req.body})`)
 });
 
 reviewRoutes.put('/helpful', (req, res) => {

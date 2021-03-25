@@ -12,7 +12,7 @@ FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '/Users/samuelberston/Desktop/SDC/ReviewsAPI/CSV/characteristics-clean.csv'
+LOAD DATA LOCAL INFILE '/Users/samuelberston/Desktop/SDC/ReviewsAPI/DB/CSV/characteristics-clean.csv'
 INTO TABLE characteristics
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
