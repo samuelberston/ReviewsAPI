@@ -1,7 +1,6 @@
 # ReviewsAPI
 
-Project Description:
-Built a scalable and optimized SQL database and server to handle 10M+ lines of data and serve it to a front end application with speed
+I built a scalable and optimized SQL database and server to handle 10M+ lines of data and serve it to a front end application with speed
 
 *Technologies Used*
 
@@ -30,5 +29,8 @@ Load balancing
 - NGINX
 
 
-
-CAR
+*Challenges, Actions, Results*
+This project challenged me to think in terms of optimization by iteratively testing and building. Here are a few ways I optimized the service
+- optimize MySQL queries using indexes, foreign keys, and efficient schema/data store - all queries <0.5ms
+- separated server at DB into separate EC2 intances to maximize CPU and RAM usage
+- implemented NGINX as a load balancer to distribute traffic as the application receives more requests (handles 1000+ clients/second with response times <50ms
