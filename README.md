@@ -1,6 +1,6 @@
 # ReviewsAPI
 
-I built a scalable and optimized SQL database and server to handle 10M+ lines of data and serve it to a front end application with speed
+I built a scalable and optimized SQL database and Express server to handle 10M+ lines of data and serve it to a front end application with speed and efficiency
 
 *Technologies Used*
 
