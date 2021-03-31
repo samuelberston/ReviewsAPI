@@ -2,6 +2,18 @@
 
 I built a scalable and optimized SQL database and Express server to handle 10M+ lines of data and serve it to a front end application with speed and efficiency
 
+*starting the app*
+Database
+- launch db in an EC2 instance and seed the data
+
+Server(s)
+- launch server(s) in an EC2 instance an configue db.js with the DB EC2 Public IP
+- configure loader.io route in server.js (for stress testing)
+- start the servers - npm start
+
+NGINX
+- ???
+
 *Technologies Used*
 
 DB (schema, loading, seeding data)
